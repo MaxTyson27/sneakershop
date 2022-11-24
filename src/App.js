@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {Provider, connect} from 'react-redux';
+import './sass/styles/Reset.sass';
+import './sass/styles/Global.sass';
+import store from './redux/redux-store'
+import HeaderContainer from './components/Header/HeaderContainer';
+import MainContainer from './components/Main/MainContainer';
 
-function App() {
+
+const App = (props) => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HeaderContainer/>
+      <Routes>
+        <Route path='/' element={<MainContainer/>}/>
+      </Routes>
     </div>
   );
 }
 
-export default App;
+const AppContainer = connect(null, null)(App)
+
+const SneakerApp = (props) => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </BrowserRouter>
+  )
+}
+
+export default SneakerApp;
