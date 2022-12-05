@@ -11,6 +11,10 @@ import image10 from '../images/sneakers/10.jpg'
 import image11 from '../images/sneakers/11.jpg'
 import image12 from '../images/sneakers/12.jpg'
 
+const TOGGLE_CART_BTN = 'TOGGLE_CART_BTN'
+const TOGGLE_FAVOURITE_BTN = 'TOGGLE_FAVOURITE_BTN'
+const IS_EMPTY_FAVOURITES = 'IS_EMPTY_FAVOURITES'
+const RESET_BUTTONS_IN_CARD = 'RESET_BUTTONS_IN_CARD'
 
 let defaulState = {
   sneakers: [
@@ -110,12 +114,82 @@ let defaulState = {
       isFavourite: false,
       isCart: false, 
     },
-  ]
+  ],
+  isEmptyFavouirites: true,
 }
 
 
 const productReducer = (state = defaulState, action) => {
-  return state;
+  switch (action.type) {
+    case RESET_BUTTONS_IN_CARD:
+      return {
+        ...state,
+        sneakers: state.sneakers.map((item) => {
+          return {
+            ...item,
+            isCart: false,
+          }
+        })
+      }
+    case TOGGLE_CART_BTN:
+      return {
+        ...state,
+        sneakers: state.sneakers.map((item) => {
+          if(item.id === action.id){
+            return {
+              ...item,
+              isCart: !item.isCart
+            }
+          }
+          return item
+        })
+      }
+      
+    case TOGGLE_FAVOURITE_BTN:
+      return {
+        ...state,
+        sneakers: state.sneakers.map((item) => {
+          if(item.id === action.id){
+            return {
+              ...item,
+              isFavourite: !item.isFavourite
+            }
+          }
+          return item
+        })
+      }
+
+    case IS_EMPTY_FAVOURITES:
+      return {
+        ...state,
+        isEmptyFavouirites: state.sneakers.find((item) => {
+          return item.isFavourite === true
+        })
+      }
+
+    default:
+      return state
+  }
 }
+
+export const resetBtns = () => ({
+  type: RESET_BUTTONS_IN_CARD,
+})
+
+export const toggleCartBtn = (id) => ({
+  type: TOGGLE_CART_BTN,
+  id
+})
+
+export const toggleFavouriteBtn = (id) => ({
+  type: TOGGLE_FAVOURITE_BTN,
+  id
+})
+
+export const showEmptyBlockInFavourites = () => ({
+  type: IS_EMPTY_FAVOURITES
+})
+
+
 
 export default productReducer

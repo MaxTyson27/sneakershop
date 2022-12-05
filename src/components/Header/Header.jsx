@@ -3,7 +3,7 @@ import cl from './Header.module.sass'
 import logo from '../../images/logo.png'
 import favImg from '../../images/icons/heart.svg'
 import userImage from '../../images/icons/user.svg'
-import CartContainer from './Cart/CartContainer';
+import HeaderCartContainer from './HeaderCart/HeaderCartContainer';
 import { NavLink } from 'react-router-dom';
 
 const Header = () => {
@@ -12,15 +12,17 @@ const Header = () => {
       <div className="container">
         <div className={cl.row}>
           <div className={cl.logo_box}>
-            <img src={logo} alt="logo icon"/>
+            <NavLink to='/'>
+              <img src={logo} alt="logo icon"/>
+            </NavLink>
             <div>
               <p className={cl.logo_title}>REACT SNEAKERS</p>
               <p className={cl.logo_text}>Магазин лучших кроссовок</p>
             </div>
           </div>
           <div className={cl.box}>
-            <CartContainer/>
-            <NavLink to='/favourites' className={cl.fav}>
+            <HeaderCartContainer/>
+            <NavLink to='/favourite' className={cl.fav}>
               <img src={favImg} alt="cart icon link"/>
             </NavLink>
             <NavLink to='/profile' className={cl.profile}>

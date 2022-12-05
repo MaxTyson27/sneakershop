@@ -4,7 +4,10 @@ import './sass/styles/Reset.sass';
 import './sass/styles/Global.sass';
 import store from './redux/redux-store'
 import HeaderContainer from './components/Header/HeaderContainer';
-import MainContainer from './components/Main/MainContainer';
+import Main from './components/Main/Main';
+import CartContainer from './components/Cart/CartContainer';
+import FavouriteContainer from './components/Favourite/FavouriteContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 
 const App = (props) => {
@@ -12,13 +15,21 @@ const App = (props) => {
     <div className="App">
       <HeaderContainer/>
       <Routes>
-        <Route path='/' element={<MainContainer/>}/>
+        <Route path='/' element={<Main/>}/>
+        <Route path='/favourite' element={<FavouriteContainer/>} />
+        <Route path='/profile' element={<ProfileContainer/>} />
       </Routes>
+      {props.openCartMode && <CartContainer/>}
     </div>
   );
 }
 
-const AppContainer = connect(null, null)(App)
+
+const mapStateToProps = (state) => ({
+  openCartMode: state.cart.openCartMode
+})
+
+const AppContainer = connect(mapStateToProps, null)(App)
 
 const SneakerApp = (props) => {
   return (
